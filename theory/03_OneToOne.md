@@ -1,5 +1,9 @@
 # 3. `@OneToOne`
 
+- 아래의 Action들은 `@OneToOne` Relation 뿐만 아니라 다른 여러 종류의 Relation에서도 동일하게 제공되는 기능들이다.
+
+<br>
+
 ## 3.1 `cascade`
 
 ```java
@@ -91,7 +95,7 @@
 ```
 
 - default Fetch Type
-- `left outer join`으로 하나의 블록으로 쿼리문이 실행됨
+- `SELECT`문이 `left outer join`으로 하나의 블록으로 실행됨
 
 <br>
 
@@ -101,3 +105,27 @@
 @OneToOne(fetch = FetchType.LAZY)
 ```
 
+- `SELECT` 문이 두 개로 분리되어 실행됨
+
+- 해당 엔티티를 `SELECT`할 때는 `@OneToOne`이 지정된 필드의 엔티티를 `SELECT`하지 않고 해당 엔티티가 필요한 시점에 `SELECT`를 하게 된다.
+- 필드에 `@ToString.Exclude`를 지정하면 불필요한 출력을 줄일 수 있다.
+
+<br>
+
+## 3.4 `optional`
+
+```java
+@OneToOne(optional = true/false)
+```
+
+- default optional : true
+
+<br>
+
+### 3.4.1 `optional = false`
+
+```java
+@OneToOne(fetch = FetchType.EAGER, optional = false)
+```
+
+- `@OneToOne` 이 선언된 필드의 엔티티는 항상 필요하다는 의미이다. (optional 이 아니다.)
