@@ -7,6 +7,7 @@
 ```
 
 - cascade : 폭포수
+- default Cascade Type 없음
 
 <br>
 
@@ -59,6 +60,8 @@
 @OneToOne(orphanRemoval = true/false)
 ```
 
+- default orphanRemoval : false
+
 <br>
 
 ### 3.2.1 `orphanRemoval = true`
@@ -67,6 +70,34 @@
 @OneToOne(orphanRemoval = true)
 ```
 
-- 해당 엔티티에 @OneToOne이 선언된 필드가 해제(`null`이 할당)되는 순간, 필드의 엔티티 객체도 함께 삭제
+- 해당 엔티티에 `@OneToOne`이 선언된 필드가 해제(`null`이 할당)되는 순간, 필드의 엔티티 객체도 함께 삭제
 
 - 불필요한 엔티티 관리 가능
+
+<br>
+
+## 3.3 `fetch`
+
+```java
+@OneToOne(fetch)
+```
+
+<br>
+
+### 3.3.1 `FetchType.EAGER`
+
+```java
+@OneToOne(fetch = FetchType.EAGER)
+```
+
+- default Fetch Type
+- `left outer join`으로 하나의 블록으로 쿼리문이 실행됨
+
+<br>
+
+### 3.3.2 `FetchType.LAZY`
+
+```java
+@OneToOne(fetch = FetchType.LAZY)
+```
+

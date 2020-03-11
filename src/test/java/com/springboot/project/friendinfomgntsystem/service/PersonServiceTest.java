@@ -62,9 +62,16 @@ class PersonServiceTest {
         blockRepository.findAll().forEach(System.out::println);
     }
 
+    @Test
+    void getPerson() {
+        givenPeople();
+
+        Person person = personService.getPerson(3L);
+    }
+
     private void givenPeople() {
-         givenPerson("martin", 10, "A");
-         givenPerson("david", 9, "B");
+         givenBlockPerson("martin", 10, "A");
+         givenBlockPerson("david", 9, "B");
          givenBlockPerson("dennis", 8, "O");
          givenBlockPerson("martin", 11, "AB");
     }
