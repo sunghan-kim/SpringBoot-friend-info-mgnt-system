@@ -8,13 +8,14 @@ import javax.persistence.Id;
 import java.time.LocalDate;
 
 @Entity
-@Getter
-@Setter
-@ToString
+//@Getter
+//@Setter
+//@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @RequiredArgsConstructor
 @EqualsAndHashCode
+@Data
 public class Person {
 
     @Id
@@ -40,28 +41,5 @@ public class Person {
 
     @ToString.Exclude
     private String phoneNumber;
-
-//    @Override
-//    public boolean equals(Object object) {
-//        if (object == null) {
-//            return false;
-//        }
-//
-//        Person person = (Person) object;
-//
-//        if (!person.getName().equals(this.getName())) {
-//            return false;
-//        }
-//
-//        if (person.getAge() != this.getAge()) {
-//            return false;
-//        }
-//
-//        return true;
-//    }
-//
-//    public int hashCode() {
-//        return (name + age).hashCode();
-//    }
 
 }
