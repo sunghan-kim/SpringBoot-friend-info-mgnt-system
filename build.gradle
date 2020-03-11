@@ -20,12 +20,14 @@ repositories {
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa' // JPA
+    implementation 'com.h2database:h2' // H2 Database for JPA
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    testImplementation 'org.junit.platform:junit-platform-launcher:1.5.0'
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.5.0'
-    testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.5.0'
+    testImplementation 'org.junit.platform:junit-platform-launcher:1.5.0' // junit5
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.5.0'        // junit5
+    testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.5.0'     // junit5
 }
 
 test {
