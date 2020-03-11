@@ -35,4 +35,9 @@ class PersonRepositoryTest {
         assertThat(people.get(0).getBloodType()).isEqualTo("A");
     }
 
+    @Test
+    void constructorTest() {
+        Person person = new Person("martin", 10);
+    }
+
 }
