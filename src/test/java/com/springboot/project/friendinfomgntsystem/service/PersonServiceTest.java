@@ -50,7 +50,14 @@ class PersonServiceTest {
 
         ///////////////////////////////////////////////////////////
 
-        personRepository.delete(person);
+//        personRepository.delete(person);
+//        personRepository.findAll().forEach(System.out::println);
+//        blockRepository.findAll().forEach(System.out::println);
+
+        ///////////////////////////////////////////////////////////
+
+        person.setBlock(null); // block 해제
+        personRepository.save(person);
         personRepository.findAll().forEach(System.out::println);
         blockRepository.findAll().forEach(System.out::println);
     }
