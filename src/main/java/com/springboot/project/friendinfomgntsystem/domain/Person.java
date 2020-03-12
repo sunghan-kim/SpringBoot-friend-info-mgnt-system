@@ -4,6 +4,7 @@ import com.springboot.project.friendinfomgntsystem.domain.dto.Birthday;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.Valid;
 import java.time.LocalDate;
 
 @Entity
@@ -30,6 +31,7 @@ public class Person {
 
     private String address;
 
+    @Valid
     @Embedded
     private Birthday birthday;
 
