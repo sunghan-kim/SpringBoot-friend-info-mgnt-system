@@ -3,6 +3,7 @@ package com.springboot.project.friendinfomgntsystem.repository;
 import com.springboot.project.friendinfomgntsystem.domain.Person;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public interface PersonRepository extends JpaRepository<Person, Long> {
@@ -12,5 +13,7 @@ public interface PersonRepository extends JpaRepository<Person, Long> {
     List<Person> findByBlockIsNull();
 
     List<Person> findByBloodType(String bloodType);
+
+    List<Person> findByBirthdayBetween(LocalDate startDate, LocalDate endDate);
 
 }
