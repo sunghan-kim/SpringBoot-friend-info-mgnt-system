@@ -2,7 +2,6 @@ package com.springboot.project.friendinfomgntsystem.service;
 
 import com.springboot.project.friendinfomgntsystem.controller.dto.PersonDto;
 import com.springboot.project.friendinfomgntsystem.domain.Person;
-import com.springboot.project.friendinfomgntsystem.domain.dto.Birthday;
 import com.springboot.project.friendinfomgntsystem.repository.PersonRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,6 +49,15 @@ public class PersonService {
         }
 
         person.set(personDto);
+
+        personRepository.save(person);
+    }
+
+    @Transactional
+    public void modify(Long id, String name) {
+        Person person = personRepository.findById(id).orElseThrow(() -> new RuntimeException("아이디가 존재하지 않습니다."));
+
+        person.setName(name);
 
         personRepository.save(person);
     }
