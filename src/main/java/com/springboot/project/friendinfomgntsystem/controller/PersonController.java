@@ -13,7 +13,8 @@ public class PersonController {
     private PersonService personService;
 
     @GetMapping
-    public Person getPerson(@RequestParam(required = false, defaultValue = "1") Long id) {
+    @RequestMapping(value = "/{id}")
+    public Person getPerson(@PathVariable Long id) {
         return personService.getPerson(id);
     }
 
