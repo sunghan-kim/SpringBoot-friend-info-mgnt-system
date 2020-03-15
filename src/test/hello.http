@@ -7,3 +7,9 @@
 # * 'mptr' and 'fptr' create a POST request to submit a form with a text or file field (multipart/form-data);
 
 GET http://localhost:8080/api/helloWorld
+
+###
+
+GET http://localhost:8080/api/person?id=1
+
+###
