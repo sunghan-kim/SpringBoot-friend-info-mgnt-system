@@ -37,4 +37,21 @@ public class PersonService {
     public void put(Person person) {
         personRepository.save(person);
     }
+
+    @Transactional
+    public void modify(Long id, Person person) {
+        Person personAtDb = personRepository.findById(id).orElseThrow(() -> new RuntimeException("아이디가 존재하지 않습니다."));
+        // orElseThrow : 값이 없을 경우 예외를 throw 한다.
+
+        personAtDb.setName(person.getName());
+        personAtDb.setPhoneNumber(person.getPhoneNumber());
+        personAtDb.setJob(person.getJob());
+        personAtDb.setBirthday(person.getBirthday());
+        personAtDb.setAddress(person.getAddress());
+        personAtDb.setBloodType(person.getBloodType());
+        personAtDb.setHobby(person.getHobby());
+        personAtDb.setAge(person.getAge());
+
+        personRepository.save(personAtDb);
+    }
 }

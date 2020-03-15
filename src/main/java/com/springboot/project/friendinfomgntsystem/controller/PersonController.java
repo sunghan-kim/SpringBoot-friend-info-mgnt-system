@@ -32,4 +32,11 @@ public class PersonController {
         log.info("person -> {} ", personRepository.findAll());
     }
 
+    @PutMapping("/{id}") // 데이터 수정의 경우 REST 규약 상 @PutMapping을 사용한다. Put의 response status는 200이다.
+    public void modifyPerson(@PathVariable Long id, @RequestBody Person person) {
+        personService.modify(id, person);
+
+        log.info("person -> {} ", personRepository.findAll());
+    }
+
 }
