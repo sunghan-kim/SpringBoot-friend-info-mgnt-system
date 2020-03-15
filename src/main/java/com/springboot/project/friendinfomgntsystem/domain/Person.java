@@ -3,6 +3,7 @@ package com.springboot.project.friendinfomgntsystem.domain;
 import com.springboot.project.friendinfomgntsystem.controller.dto.PersonDto;
 import com.springboot.project.friendinfomgntsystem.domain.dto.Birthday;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 import org.springframework.util.StringUtils;
 
 import javax.persistence.*;
@@ -47,6 +48,9 @@ public class Person {
 
     @ToString.Exclude
     private String phoneNumber;
+
+    @ColumnDefault("0") // 0 : false
+    private boolean deleted;
 
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @ToString.Exclude
