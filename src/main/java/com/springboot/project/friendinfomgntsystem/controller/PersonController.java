@@ -12,8 +12,7 @@ public class PersonController {
     @Autowired
     private PersonService personService;
 
-    @GetMapping
-    @RequestMapping(value = "/{id}")
+    @GetMapping("/{id}")
     public Person getPerson(@PathVariable Long id) {
         return personService.getPerson(id);
     }
