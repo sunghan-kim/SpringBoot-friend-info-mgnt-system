@@ -30,4 +30,16 @@ class PersonControllerTest {
                 .andExpect(jsonPath("$.name").value("martin"));
     }
 
+    @Test
+    void postPerson() throws Exception {
+        mockMvc = MockMvcBuilders.standaloneSetup(personController).build();
+
+        mockMvc.perform(
+                MockMvcRequestBuilders.post("/api/person?name=martin2&age=20&bloodType=A"))
+//                    .content("{name: \"martin2\", age: 20, bloodType: \"A\"}")
+//                )
+                .andDo(print())
+                .andExpect(status().isOk());
+    }
+
 }
