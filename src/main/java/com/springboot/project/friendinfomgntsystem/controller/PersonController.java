@@ -1,5 +1,6 @@
 package com.springboot.project.friendinfomgntsystem.controller;
 
+import com.springboot.project.friendinfomgntsystem.controller.dto.PersonDto;
 import com.springboot.project.friendinfomgntsystem.domain.Person;
 import com.springboot.project.friendinfomgntsystem.repository.PersonRepository;
 import com.springboot.project.friendinfomgntsystem.service.PersonService;
@@ -33,8 +34,8 @@ public class PersonController {
     }
 
     @PutMapping("/{id}") // 데이터 수정의 경우 REST 규약 상 @PutMapping을 사용한다. Put의 response status는 200이다.
-    public void modifyPerson(@PathVariable Long id, @RequestBody Person person) {
-        personService.modify(id, person);
+    public void modifyPerson(@PathVariable Long id, @RequestBody PersonDto personDto) {
+        personService.modify(id, personDto);
 
         log.info("person -> {} ", personRepository.findAll());
     }

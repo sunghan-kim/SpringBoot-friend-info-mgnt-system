@@ -1,6 +1,8 @@
 package com.springboot.project.friendinfomgntsystem.service;
 
+import com.springboot.project.friendinfomgntsystem.controller.dto.PersonDto;
 import com.springboot.project.friendinfomgntsystem.domain.Person;
+import com.springboot.project.friendinfomgntsystem.domain.dto.Birthday;
 import com.springboot.project.friendinfomgntsystem.repository.PersonRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,18 +41,23 @@ public class PersonService {
     }
 
     @Transactional
-    public void modify(Long id, Person person) {
+    public void modify(Long id, PersonDto personDto) {
         Person personAtDb = personRepository.findById(id).orElseThrow(() -> new RuntimeException("아이디가 존재하지 않습니다."));
         // orElseThrow : 값이 없을 경우 예외를 throw 한다.
 
-        personAtDb.setName(person.getName());
-        personAtDb.setPhoneNumber(person.getPhoneNumber());
-        personAtDb.setJob(person.getJob());
-        personAtDb.setBirthday(person.getBirthday());
-        personAtDb.setAddress(person.getAddress());
-        personAtDb.setBloodType(person.getBloodType());
-        personAtDb.setHobby(person.getHobby());
-        personAtDb.setAge(person.getAge());
+        if (!personAtDb.getName().equals(personDto.getName())) {
+            throw new RuntimeException("이름이 다릅니다.");
+        }
+        personAtDb.setName(personDto.getName());
+        personAtDb.setPhoneNumber(personDto.getPhoneNumber());
+        personAtDb.setJob(personDto.getJob());
+        if (personDto.getBirthday() != null) {
+            personAtDb.setBirthday(new Birthday(personDto.getBirthday()));
+        }
+        personAtDb.setAddress(personDto.getAddress());
+        personAtDb.setBloodType(personDto.getBloodType());
+        personAtDb.setHobby(personDto.getHobby());
+        personAtDb.setAge(personDto.getAge());
 
         personRepository.save(personAtDb);
     }
