@@ -45,7 +45,7 @@ class PersonControllerTest {
                                 "}")
                 )
                 .andDo(print())
-                .andExpect(status().isOk());
+                .andExpect(status().isCreated());
     }
 
 }

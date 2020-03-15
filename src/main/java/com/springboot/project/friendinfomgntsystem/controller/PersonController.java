@@ -5,6 +5,7 @@ import com.springboot.project.friendinfomgntsystem.repository.PersonRepository;
 import com.springboot.project.friendinfomgntsystem.service.PersonService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RequestMapping(value = "/api/person")
@@ -24,6 +25,7 @@ public class PersonController {
     }
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED) // Post의 경우에는 Rest 규약 상 상태를 200(ok)가 아닌 201(Created)를 지정할 수 있다.
     public void postPerson(@RequestBody Person person) { // @RequestBody를 사용하면 json 형태의 데이터를 받을 수 있다.
         personService.put(person);
 
