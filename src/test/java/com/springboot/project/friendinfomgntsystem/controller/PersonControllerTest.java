@@ -50,6 +50,7 @@ class PersonControllerTest {
 
     @Test
     void modifyPerson() throws Exception {
+        // Put 메서드는 항상 Person Entity에 있는 동일한 정보가 들어 있어야 한다. (수정하지 않는 정보까지 필요)
         mockMvc = MockMvcBuilders.standaloneSetup(personController).build();
 
         mockMvc.perform(
