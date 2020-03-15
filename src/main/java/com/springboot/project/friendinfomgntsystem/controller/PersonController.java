@@ -24,7 +24,7 @@ public class PersonController {
     }
 
     @PostMapping
-    public void postPerson(Person person) {
+    public void postPerson(@RequestBody Person person) { // @RequestBody를 사용하면 json 형태의 데이터를 받을 수 있다.
         personService.put(person);
 
         log.info("person -> {} ", personRepository.findAll());
