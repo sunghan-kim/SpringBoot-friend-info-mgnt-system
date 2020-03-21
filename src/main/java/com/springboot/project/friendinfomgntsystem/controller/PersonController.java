@@ -53,7 +53,7 @@ public class PersonController {
 
         log.info("person -> {} ", personRepository.findAll());
 
-        return true;
+        return personRepository.findPeopleDeleted().stream().anyMatch(person -> person.getId().equals(id));
     }
 
 }
