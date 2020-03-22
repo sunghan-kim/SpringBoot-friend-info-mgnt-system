@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -40,11 +41,14 @@ class PersonControllerTest {
     @Autowired
     private ObjectMapper objectMapper;
 
+    @Autowired
+    private MappingJackson2HttpMessageConverter messageConverter;
+
     private MockMvc mockMvc;
 
     @BeforeEach // 매번의 테스트마다 해당 메서드가 한 번씩 실행된다.
     void beforeEach() {
-        mockMvc = MockMvcBuilders.standaloneSetup(personController).build();
+        mockMvc = MockMvcBuilders.standaloneSetup(personController).setMessageConverters(messageConverter).build();
     }
 
     @Test
@@ -53,7 +57,26 @@ class PersonControllerTest {
                 MockMvcRequestBuilders.get("/api/person/1"))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.name").value("martin"));
+                .andExpect(jsonPath("$.name").value("martin")) // $ 는 객체를 의미 / value() : 가져온 값에 대한 검증
+                .andExpect(jsonPath("hobby").isEmpty())
+                .andExpect(jsonPath("address").isEmpty())
+//                .andExpect(jsonPath("$.birthday.yearOfBirthday").value(1991))
+//                .andExpect(jsonPath("$.birthday.monthOfBirthday").value(8))
+//                .andExpect(jsonPath("$.birthday.dayOfBirthday").value(15))
+                .andExpect(jsonPath("$.birthday").value("1991-08-15"))
+                .andExpect(jsonPath("$.job").isEmpty())
+                .andExpect(jsonPath("$.phoneNumber").isEmpty())
+                .andExpect(jsonPath("$.deleted").value(false))
+                .andExpect(jsonPath("$.age").exists())
+                .andExpect(jsonPath("$.age").isNumber())
+                .andExpect(jsonPath("$.birthdayToday").exists())
+                .andExpect(jsonPath("$.birthdayToday").isBoolean());
+
+        /*
+        아래 2개는 동일한 기능을 수행한다.
+        jsonPath("$.name").value("martin"); // json 객체에 대한 검증
+        assertThat(result.getName()).isEqualTo("martin"); // java 객체에 대한 검증
+         */
     }
 
     @Test
