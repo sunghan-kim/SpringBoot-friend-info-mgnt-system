@@ -60,9 +60,6 @@ class PersonControllerTest {
                 .andExpect(jsonPath("$.name").value("martin")) // $ 는 객체를 의미 / value() : 가져온 값에 대한 검증
                 .andExpect(jsonPath("hobby").isEmpty())
                 .andExpect(jsonPath("address").isEmpty())
-//                .andExpect(jsonPath("$.birthday.yearOfBirthday").value(1991))
-//                .andExpect(jsonPath("$.birthday.monthOfBirthday").value(8))
-//                .andExpect(jsonPath("$.birthday.dayOfBirthday").value(15))
                 .andExpect(jsonPath("$.birthday").value("1991-08-15"))
                 .andExpect(jsonPath("$.job").isEmpty())
                 .andExpect(jsonPath("$.phoneNumber").isEmpty())
