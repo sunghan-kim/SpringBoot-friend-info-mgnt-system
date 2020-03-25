@@ -10,6 +10,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
@@ -37,9 +38,23 @@ class PersonServiceTest {
 
     @Test
     void getPerson() {
-        Person person = personService.getPerson(3L);
+        when(personRepository.findById(1L))
+                .thenReturn(Optional.of(new Person("martin")));
 
-        assertThat(person.getName()).isEqualTo("dennis");
+        Person person = personService.getPerson(1L);
+
+        assertThat(person.getName()).isEqualTo("martin");
+    }
+
+    @Test
+    void getPersonIfNotFound() {
+        // Mock Test를 통해 DB 작업 없이 간단하게 Test를 구현할 수 있다.
+        when(personRepository.findById(1L))
+                .thenReturn(Optional.empty()); // null
+
+        Person person = personService.getPerson(1L);
+
+        assertThat(person).isNull();
     }
 
 }
