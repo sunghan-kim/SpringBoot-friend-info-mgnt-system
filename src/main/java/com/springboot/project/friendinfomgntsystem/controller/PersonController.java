@@ -2,11 +2,14 @@ package com.springboot.project.friendinfomgntsystem.controller;
 
 import com.springboot.project.friendinfomgntsystem.controller.dto.PersonDto;
 import com.springboot.project.friendinfomgntsystem.domain.Person;
+import com.springboot.project.friendinfomgntsystem.exception.RenameNotPermittedException;
+import com.springboot.project.friendinfomgntsystem.exception.dto.ErrorResponse;
 import com.springboot.project.friendinfomgntsystem.repository.PersonRepository;
 import com.springboot.project.friendinfomgntsystem.service.PersonService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RequestMapping(value = "/api/person")
@@ -33,11 +36,7 @@ public class PersonController {
 
     @PutMapping("/{id}") // 데이터 수정의 경우 REST 규약 상 @PutMapping을 사용한다. Put의 response status는 200이다. Put은 전체 데이터 변경
     public void modifyPerson(@PathVariable Long id, @RequestBody PersonDto personDto) {
-        try {
-            personService.modify(id, personDto);
-        } catch (RuntimeException ex) {
-            log.error(ex.getMessage(), ex);
-        }
+        personService.modify(id, personDto);
     }
 
     @PatchMapping("/{id}") // Patch : 일부 데이터만 변경
@@ -50,4 +49,8 @@ public class PersonController {
         personService.delete(id);
     }
 
+    @ExceptionHandler(value = RenameNotPermittedException.class)
+    public ResponseEntity<ErrorResponse> handleRenameNoPermittedException(RenameNotPermittedException ex) {
+        return new ResponseEntity<>(ErrorResponse.of(HttpStatus.BAD_REQUEST.value(), ex.getMessage()), HttpStatus.BAD_REQUEST); // BAD_REQUEST : 400
+    }
 }
