@@ -71,7 +71,7 @@ class PersonServiceTest {
         // 이에 따라 Mock Test에서는 새로운 방식으로 void return에 대한 Method 테스트를 진행한다. (verify 이용)
         // verify() : 지정한 Mock 들의 action에 대한 검증
         verify(personRepository).save(any(Person.class));
-        verify(personRepository, times(1)).save(any(Person.class)); // 1번 실행됐는 지 확인
+        verify(personRepository, times(1)).save(argThat(new IsPersonWillBeInserted())); // 1번 실행됐는 지 확인
     }
 
     @Test
@@ -139,6 +139,22 @@ class PersonServiceTest {
 
     private PersonDto mockPersonDto() {
         return PersonDto.of("martin", "programming", "판교", LocalDate.now(), "programmer", "010-1111-2222");
+    }
+
+    private static class IsPersonWillBeInserted implements ArgumentMatcher<Person> {
+        @Override
+        public boolean matches(Person person) {
+            return equals(person.getName(), "martin")
+                    && equals(person.getHobby(), "programming")
+                    && equals(person.getAddress(), "판교")
+                    && equals(person.getBirthday(), Birthday.of(LocalDate.now()))
+                    && equals(person.getJob(), "programmer")
+                    && equals(person.getPhoneNumber(), "010-1111-2222");
+        }
+
+        private boolean equals(Object actual, Object expected) {
+            return expected.equals(actual);
+        }
     }
 
     private static class IsPersonWillBeUpdated implements ArgumentMatcher<Person> {
