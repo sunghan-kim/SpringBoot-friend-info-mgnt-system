@@ -1,5 +1,6 @@
 package com.springboot.project.friendinfomgntsystem.service;
 
+import com.springboot.project.friendinfomgntsystem.controller.dto.PersonDto;
 import com.springboot.project.friendinfomgntsystem.domain.Person;
 import com.springboot.project.friendinfomgntsystem.repository.PersonRepository;
 import org.assertj.core.util.Lists;
@@ -9,11 +10,13 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.when;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class PersonServiceTest {
@@ -55,6 +58,18 @@ class PersonServiceTest {
         Person person = personService.getPerson(1L);
 
         assertThat(person).isNull();
+    }
+
+    @Test
+    void put() {
+        PersonDto dto = PersonDto.of("martin", "programming", "판교", LocalDate.now(), "programmer", "010-1111-2222");
+        // PersonRepository Mock에 대한 action을 지정해주지 않아도 save가 되었다라는 것만 확인한다.
+        personService.put(dto);
+        // save가 실제로 되었는 지 DB 값을 가져와 데이터 검증을 할 수 없다.
+        // 이에 따라 Mock Test에서는 새로운 방식으로 void return에 대한 Method 테스트를 진행한다. (verify 이용)
+        // verify() : 지정한 Mock 들의 action에 대한 검증
+        verify(personRepository).save(any(Person.class));
+        verify(personRepository, times(1)).save(any(Person.class)); // 1번 실행됐는 지 확인
     }
 
 }
