@@ -33,7 +33,11 @@ public class PersonController {
 
     @PutMapping("/{id}") // 데이터 수정의 경우 REST 규약 상 @PutMapping을 사용한다. Put의 response status는 200이다. Put은 전체 데이터 변경
     public void modifyPerson(@PathVariable Long id, @RequestBody PersonDto personDto) {
-        personService.modify(id, personDto);
+        try {
+            personService.modify(id, personDto);
+        } catch (RuntimeException ex) {
+            log.error(ex.getMessage(), ex);
+        }
     }
 
     @PatchMapping("/{id}") // Patch : 일부 데이터만 변경

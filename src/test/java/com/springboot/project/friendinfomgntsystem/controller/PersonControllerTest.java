@@ -129,15 +129,12 @@ class PersonControllerTest {
     void modifyPersonIfNameIsDifferent() throws Exception {
         PersonDto dto = PersonDto.of("james", "programming", "판교", LocalDate.now(), "programmer", "010-1111-2222");
 
-        assertThrows(NestedServletException.class, () ->
-                mockMvc.perform(
-                        MockMvcRequestBuilders.put("/api/person/1")
-                                .contentType(MediaType.APPLICATION_JSON_UTF8)
-                                .content(toJsonString(dto))
-                )
-                        .andDo(print())
-                        .andExpect(status().isOk())
-         );
+        mockMvc.perform(
+                MockMvcRequestBuilders.put("/api/person/1")
+                        .contentType(MediaType.APPLICATION_JSON_UTF8)
+                        .content(toJsonString(dto)))
+                .andDo(print())
+                .andExpect(status().isOk());
     }
 
     @Test
