@@ -9,7 +9,8 @@ import java.util.List;
 
 public interface PersonRepository extends JpaRepository<Person, Long> {
 
-    List<Person> findByName(String name);
+    @Query(value = "select person from Person person where person.address = :name") // PersonServiceTest 실행 시 실제 PersonRepository가 실행되지 않는 것 확인
+    List<Person> findByName(@Param("name") String name);
 
     @Query(value = "select person from Person person where person.birthday.monthOfBirthday = :monthOfBirthday")
     List<Person> findByMonthOfBirthday(@Param("monthOfBirthday") int monthOfBirthday);
