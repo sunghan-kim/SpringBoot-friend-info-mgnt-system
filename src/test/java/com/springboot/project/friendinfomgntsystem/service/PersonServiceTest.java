@@ -33,6 +33,19 @@ class PersonServiceTest {
     private PersonRepository personRepository;
 
     @Test
+    void getAll() {
+        when(personRepository.findAll())
+                .thenReturn(Lists.newArrayList(new Person("martin"), new Person("dennis"), new Person("tony")));
+
+        List<Person> result = personService.getAll();
+
+        assertThat(result.size()).isEqualTo(3);
+        assertThat(result.get(0).getName()).isEqualTo("martin");
+        assertThat(result.get(1).getName()).isEqualTo("dennis");
+        assertThat(result.get(2).getName()).isEqualTo("tony");
+    }
+
+    @Test
     void getPeopleByName() {
         // personRepository.findByName() 이 실제로 호출되는 것이 아니라 호출되었다고 가정하는 것이다. (Mock)
         when(personRepository.findByName("martin"))
