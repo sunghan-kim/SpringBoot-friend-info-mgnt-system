@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.springboot.project.friendinfomgntsystem.controller.dto.PersonDto;
 import com.springboot.project.friendinfomgntsystem.domain.Person;
 import com.springboot.project.friendinfomgntsystem.domain.dto.Birthday;
+import com.springboot.project.friendinfomgntsystem.exception.handler.GlobalExceptionHandler;
 import com.springboot.project.friendinfomgntsystem.repository.PersonRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
@@ -18,6 +19,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.context.WebApplicationContext;
 
 import java.time.LocalDate;
 
@@ -34,24 +36,21 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class PersonControllerTest {
 
     @Autowired
-    private PersonController personController;
-
-    @Autowired
     private PersonRepository personRepository;
 
     @Autowired
     private ObjectMapper objectMapper;
 
     @Autowired
-    private MappingJackson2HttpMessageConverter messageConverter;
+    private WebApplicationContext wac;
+    // standaloneSetup(personController), setMessageConverters(messageConverter), setControllerAdvice(globalExceptionHandler) 을 대신할 수 있다.
 
     private MockMvc mockMvc;
 
     @BeforeEach // 매번의 테스트마다 해당 메서드가 한 번씩 실행된다.
     void beforeEach() {
         mockMvc = MockMvcBuilders
-                .standaloneSetup(personController)
-                .setMessageConverters(messageConverter)
+                .webAppContextSetup(wac)
                 .alwaysDo(print())
                 .build();
     }
